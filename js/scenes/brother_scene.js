@@ -33,6 +33,9 @@
       if(this.shouldUpdate) {
         this.percentage = this.pixelsCovered / distanceToCover;
         this.shouldUpdate = false;
+        if(this.percentage >= 1) {
+          game.scene.end();
+        }
       }
     }
   });
@@ -63,6 +66,10 @@
       me.input.unbindKey(me.input.KEY.RIGHT);
       me.input.unbindKey(me.input.KEY.SPACE);
       this.parent();
+    },
+
+    end : function() {
+      game.playScreen.showNextButton();
     },
 
     restart : function() {

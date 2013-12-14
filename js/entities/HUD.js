@@ -27,6 +27,25 @@ game.HUD.Container = me.ObjectContainer.extend({
 
     // add our child score object at the top left corner
     this.addChild(new game.HUD.ScoreItem(5, 5));
+    this.nextButton = new game.HUD.nextButton();
+    this.restartButton = new game.HUD.restartButton();
+    this.addChild(nextButton);
+    this.addChild(restartButton);
+  }
+});
+
+game.HUD.nextButton = me.AnimationSheet.extend({
+  init : function() {
+    this.parent(30, 30, me.loader.getImage('buttons'), 160, 64);
+    this.addAnimation('idle', [1], 1);
+    this.setCurrentAnimation('idle');
+    me.input.registerPointerEvent('mousedown', this, this.clicked.bind(this));
+    this.visible = false;
+  },
+
+  clicked : function() {
+    game.playScreen.nextScene();
+    this.visible = false;
   }
 });
 
@@ -36,13 +55,14 @@ game.HUD.restartButton = me.AnimationSheet.extend({
     this.addAnimation('idle', [0], 1);
     this.setCurrentAnimation('idle');
     me.input.registerPointerEvent('mousedown', this, this.clicked.bind(this));
+    this.visible = false;
   },
 
   clicked : function() {
     game.scene.restart();
-    game.HUD.removeChild(this);
+    this.visible = false;
   }
-})
+});
 
 /**
  * a basic HUD item to display score

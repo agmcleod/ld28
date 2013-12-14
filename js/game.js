@@ -34,12 +34,12 @@ var game = {
   // Run on game resources loaded.
   "loaded" : function () {
     me.event.subscribe(me.event.STATE_PAUSE, (function() {
-      game.timer.pause();
+      if(game.timer) game.timer.pause();
       this.pauseChildTimers(me.game.world);
     }).bind(this));
 
     me.event.subscribe(me.event.STATE_RESUME, (function () {
-      game.timer.resume();
+      if(game.timer) game.timer.resume();
       this.resumeChildTimers(me.game.world);
     }).bind(this))
 
@@ -49,6 +49,7 @@ var game = {
     me.state.set(me.state.MENU, new game.TitleScreen());
     this.playScreen = new game.PlayScreen();
     me.state.set(me.state.PLAY, this.playScreen);
+    me.state.set(me.state.GAME_END, new game.EndScreen());
 
     // Start the game.
     me.state.change(me.state.PLAY);
@@ -76,5 +77,24 @@ var game = {
         this.resumeChildTimers(child);
       }
     }
+  }
+};
+
+
+game.math = {
+  getYIntercept : function(p1, slope) {
+    return p1.y - slope * p1.x;
+  },
+
+  slope : function(p1, p2) {
+    return (p2.y - p1.y) / (p2.x - p1.x);
+  },
+
+  xFromSlope : function(y, slope, b) {
+    return (y - b) / slope;
+  },
+
+  yFromSlope : function(x, slope, b) {
+    return slope * x + b;
   }
 };

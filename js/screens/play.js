@@ -17,8 +17,9 @@
       this.parent(true);
     },
 
-    addRestartButton : function() {
-      game.hudContainer.addChild(new game.HUD.restartButton());
+    nextScene : function() {
+      // TODO : implement actual scene switching
+      me.state.change(me.state.GAME_END);
     },
 
     onResetEvent: function() {
@@ -38,6 +39,14 @@
      */
     onDestroyEvent: function() {
       me.input.unbindKey(me.input.KEY.ENTER);
+    },
+
+    showNextButton : function() {
+      game.hudContainer.nextButton.visible = true;
+    },
+
+    showRestartButton : function() {
+      game.hudContainer.restartButton.visible = true;
     },
 
     update : function(time) {

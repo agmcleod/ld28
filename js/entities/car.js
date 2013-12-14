@@ -56,16 +56,16 @@
       if(this.timer) this.timer.update();
       if(this.type === 'blue' && !this.stuck) {
         if(me.input.isKeyPressed('left')) {
-          this.pos.x -= 10;
+          this.pos.x -= 8;
         }
         if(me.input.isKeyPressed('right')) {
-          this.pos.x += 10;
+          this.pos.x += 8;
         }
 
         if(this.pos.x < 150 || this.pos.x > 720) {
           game.scene.tarmac.setSpeed(0);
           this.stuck = true;
-          game.playScreen.addRestartButton();
+          game.playScreen.showRestartButton();
         }
         if(this.timer && this.timer.elapsed > 1500) {
           game.scene.tarmac.setSpeed(game.scene.tarmac.speed + 10);
@@ -77,7 +77,7 @@
         if(res && res.obj.name === 'car') {
           game.scene.tarmac.setSpeed(0);
           this.stuck = true;
-          game.playScreen.addRestartButton();
+          game.playScreen.showRestartButton();
         }
       }
       this.pos.y += this.speed * game.timer.deltaAsSeconds();
