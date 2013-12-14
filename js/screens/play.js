@@ -3,8 +3,7 @@ game.PlayScreen = me.ScreenObject.extend({
    *  action to perform on state change
    */
   onResetEvent: function() {
-    // reset the score
-    game.data.score = 0;
+    game.scene = new game.BrotherScene();
 
     // add our HUD to the game world
     me.game.add(new game.HUD.Container());
