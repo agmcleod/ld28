@@ -17,6 +17,10 @@
       this.parent(true);
     },
 
+    addRestartButton : function() {
+      game.hudContainer.addChild(new game.HUD.restartButton());
+    },
+
     onResetEvent: function() {
       me.input.bindKey(me.input.KEY.ENTER, 'enter');
       game.scene = new game.BrotherScene();
@@ -24,7 +28,8 @@
       me.game.world.addChild(game.scene);
       // add our HUD to the game world
       me.game.world.addChild(new Background());
-      me.game.world.addChild(new game.HUD.Container());
+      game.hudContainer = new game.HUD.Container();
+      me.game.world.addChild(game.hudContainer);
     },
 
 

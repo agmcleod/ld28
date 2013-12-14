@@ -47,7 +47,8 @@ var game = {
 
 
     me.state.set(me.state.MENU, new game.TitleScreen());
-    me.state.set(me.state.PLAY, new game.PlayScreen());
+    this.playScreen = new game.PlayScreen();
+    me.state.set(me.state.PLAY, this.playScreen);
 
     // Start the game.
     me.state.change(me.state.PLAY);

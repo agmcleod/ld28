@@ -24,17 +24,15 @@
   });
 
   game.Tarmac = me.ObjectContainer.extend({
-    init : function() {
+    init : function(scene) {
+      this.scene = scene;
       this.image = me.loader.getImage('tarmac');
       this.name = 'tarmac';
       this.parent(0, 0, me.game.viewport.width, me.game.viewport.height);
       this.speed = 0;
-      this.addChild(new Section(0, 0, this.image), 2);
-      this.addChild(new Section(0, me.game.viewport.height, this.image), 2);
-      this.addChild(me.entityPool.newInstanceOf('car', 300, 50, 'red'), 3);
-      this.addChild(me.entityPool.newInstanceOf('car', 570, 400, 'green'), 3);
       this.alwaysUpdate = true;
       this.isRenderable = true;
+      this.restart();
     },
 
     addCar : function() {
@@ -53,6 +51,19 @@
     removeAndAddCar : function(obj) {
       this.removeChild(obj);
       this.addCar();
+    },
+
+    restart : function() {
+      if(this.children.length > 0) {
+        this.destroy();
+      }
+      this.addChild(new Section(0, 0, this.image), 2);
+      this.addChild(new Section(0, me.game.viewport.height, this.image), 2);
+      this.addChild(me.entityPool.newInstanceOf('car', 300, 50, 'red'), 3);
+      this.addChild(me.entityPool.newInstanceOf('car', 570, 400, 'green'), 3);
+      if(!this.scene.showInstructions) {
+        this.setSpeed();
+      }
     },
 
     setSpeed : function(speed) {
