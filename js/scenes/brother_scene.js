@@ -1,7 +1,8 @@
 game.BrotherScene = game.Scene.extend({
   init : function() {
-    me.game.world.addChild(new game.Tarmac());
-    this.player = new game.Car(250, me.game.viewport.height - 256, 'blue');
+    this.tarmac = new game.Tarmac();
+    me.game.world.addChild(this.tarmac);
+    this.player = new game.Car(300, me.game.viewport.height - 256, 'blue');
     me.game.world.addChild(this.player, 3);
     me.input.bindKey(me.input.KEY.A, 'left');
     me.input.bindKey(me.input.KEY.D, 'right');

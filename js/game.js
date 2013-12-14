@@ -41,7 +41,9 @@ var game = {
     me.event.subscribe(me.event.STATE_RESUME, (function () {
       game.timer.resume();
       this.resumeChildTimers(me.game.world);
-    }).bind(this));
+    }).bind(this))
+
+    me.entityPool.add('car', game.Car, true);
 
 
     me.state.set(me.state.MENU, new game.TitleScreen());
