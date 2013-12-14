@@ -1,7 +1,9 @@
 game.PlayScreen = me.ScreenObject.extend({
-  /**
-   *  action to perform on state change
-   */
+  
+  init : function() {
+    this.parent(true);
+  },
+
   onResetEvent: function() {
     game.scene = new game.BrotherScene();
 
@@ -16,5 +18,9 @@ game.PlayScreen = me.ScreenObject.extend({
   onDestroyEvent: function() {
     // remove the HUD from the game world
     me.game.world.removeChild(me.game.world.getEntityByProp("name", "HUD")[0]);
+  },
+
+  update : function(time) {
+    game.scene.update(time);
   }
 });
