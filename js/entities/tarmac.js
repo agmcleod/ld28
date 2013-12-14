@@ -73,8 +73,11 @@
       if(this.speed !== speed) {
         this.speed = speed;
         this.forChild(function(child) {
-          if(child.name === 'tarmacSection' || child.name === 'car') {
+          if(child.name === 'tarmacSection') {
             child.speed = speed;
+          }
+          else if(child.name === 'car') {
+            child.speed = speed * 0.8;
           }
         });
       }
@@ -82,6 +85,7 @@
 
     update : function(time) {
       this.parent(time);
+      this.scene.progress.addPixelsCovered(this.speed * game.timer.deltaAsSeconds());
       return true;
     }
   });
