@@ -1,12 +1,12 @@
 game.PlayScreen = me.ScreenObject.extend({
-  
+
   init : function() {
     this.parent(true);
   },
 
   onResetEvent: function() {
     game.scene = new game.BrotherScene();
-
+    game.timer = new game.Timer();
     me.game.world.addChild(game.scene);
     // add our HUD to the game world
     me.game.world.addChild(new game.HUD.Container());
@@ -23,5 +23,6 @@ game.PlayScreen = me.ScreenObject.extend({
 
   update : function(time) {
     game.scene.update(time);
+    game.timer.update();
   }
 });

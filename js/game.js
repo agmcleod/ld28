@@ -33,10 +33,45 @@ var game = {
 
   // Run on game resources loaded.
   "loaded" : function () {
+    me.event.subscribe(me.event.STATE_PAUSE, (function() {
+      game.timer.pause();
+      this.pauseChildTimers(me.game.world);
+    }).bind(this));
+
+    me.event.subscribe(me.event.STATE_RESUME, (function () {
+      game.timer.resume();
+      this.resumeChildTimers(me.game.world);
+    }).bind(this));
+
+
     me.state.set(me.state.MENU, new game.TitleScreen());
     me.state.set(me.state.PLAY, new game.PlayScreen());
 
     // Start the game.
     me.state.change(me.state.PLAY);
+  },
+
+  pauseChildTimers : function(container) {
+    for(var i = 0; i < container.children.length; i++) {
+      var child = container.children[i];
+      if(child.timer !== null && typeof child.timer !== 'undefined') {
+        child.timer.pause();
+      }
+      if(child.children !== null && typeof child.children === 'object') {
+        this.pauseChildTimers(child);
+      }
+    }
+  },
+
+  resumeChildTimers : function(container) {
+    for(var i = 0; i < container.children.length; i++) {
+      var child = container.children[i];
+      if(child.timer !== null && typeof child.timer !== 'undefined') {
+        child.timer.resume();
+      }
+      if(child.children !== null && typeof child.children === 'object') {
+        this.resumeChildTimers(child);
+      }
+    }
   }
 };
