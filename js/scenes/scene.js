@@ -1,13 +1,13 @@
 game.Scene = Object.extend({
-	init : function() {
-	
-	},
+  init : function() {
+    this.alwaysUpdate = true;
+  },
 
-	cleanup : function() {
-		me.game.world.reset();
-	},
+  cleanup : function() {
+    me.game.world.reset();
+  },
 
-	update : function(time) {
+  update : function(time) {
 
-	}
+  }
 })
