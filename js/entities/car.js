@@ -16,7 +16,11 @@
       this.speed = speed || 0;
       this.alwaysUpdate = true;
       this.updateColRect(15, 100, 20, 225);
-      this.stuck = false;
+      this.stuck = true;
+
+      if(type === 'blue') {
+        this.timer = new game.Timer();
+      }
 
       switch(type) {
         case 'blue':
@@ -42,6 +46,7 @@
     },
 
     update : function(time) {
+      if(this.timer) this.timer.update();
       if(this.type === 'blue' && !this.stuck) {
         if(me.input.isKeyPressed('left')) {
           this.pos.x -= 10;
@@ -53,6 +58,10 @@
         if(this.pos.x < 150 || this.pos.x > 720) {
           game.scene.tarmac.setSpeed(0);
           this.stuck = true;
+        }
+        if(this.timer && this.timer.elapsed > 1500) {
+          game.scene.tarmac.setSpeed(game.scene.tarmac.speed + 10);
+          this.timer.reset();
         }
       }
       if(this.type === 'blue') {

@@ -1,6 +1,5 @@
 game.Timer = Object.extend({
   init : function() {
-    this.start = me.timer.getTime();
     this.elapsed = 0;
     this.pauseStartTime = null;
     this.last = me.timer.getTime();
@@ -13,6 +12,12 @@ game.Timer = Object.extend({
 
   pause : function() {
     this.pauseStartTime = me.timer.getTime();
+  },
+
+  reset : function() {
+    this.last = me.timer.getTime();
+    this.delta = 0;
+    this.elapsed = 0;
   },
 
   resume : function() {

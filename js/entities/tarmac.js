@@ -6,7 +6,7 @@
       this.name = 'tarmacSection';
       this.alwaysUpdate = true;
       this.isRenderable = true;
-      this.speed = startSpeed;
+      this.speed = 0;
     },
 
     update : function(time) {
@@ -35,7 +35,12 @@
       this.addChild(me.entityPool.newInstanceOf('car', 570, 400, 'green'), 3);
       this.alwaysUpdate = true;
       this.isRenderable = true;
-      this.setSpeed(startSpeed);
+    },
+
+    addCar : function() {
+      var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(300, 350) : Number.prototype.random(550, 600);
+      var car = me.entityPool.newInstanceOf('car', x, - 256, null, this.speed);
+      this.addChild(car, 3);
     },
 
     forChild : function(fn) {
@@ -47,12 +52,13 @@
 
     removeAndAddCar : function(obj) {
       this.removeChild(obj);
-      var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(300, 350) : Number.prototype.random(550, 600);
-      var car = me.entityPool.newInstanceOf('car', x, - 256, null, this.speed);
-      this.addChild(car, 3);
+      this.addCar();
     },
 
     setSpeed : function(speed) {
+      if(speed === null || typeof speed === 'undefined') {
+        speed = startSpeed;
+      }
       if(this.speed !== speed) {
         this.speed = speed;
         this.forChild(function(child) {

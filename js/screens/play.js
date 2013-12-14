@@ -18,6 +18,7 @@
     },
 
     onResetEvent: function() {
+      me.input.bindKey(me.input.KEY.ENTER, 'enter');
       game.scene = new game.BrotherScene();
       game.timer = new game.Timer();
       me.game.world.addChild(game.scene);
@@ -31,8 +32,7 @@
      *  action to perform when leaving this screen (state change)
      */
     onDestroyEvent: function() {
-      // remove the HUD from the game world
-      me.game.world.removeChild(me.game.world.getEntityByProp("name", "HUD")[0]);
+      me.input.unbindKey(me.input.KEY.ENTER);
     },
 
     update : function(time) {
