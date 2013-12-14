@@ -1,12 +1,15 @@
 game.PlayScreen = me.ScreenObject.extend({
-  /**
-   *  action to perform on state change
-   */
+  
+  init : function() {
+    this.parent(true);
+  },
+
   onResetEvent: function() {
     game.scene = new game.BrotherScene();
 
+    me.game.world.addChild(game.scene);
     // add our HUD to the game world
-    me.game.add(new game.HUD.Container());
+    me.game.world.addChild(new game.HUD.Container());
   },
 
 
