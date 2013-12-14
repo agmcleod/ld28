@@ -15,7 +15,8 @@
       this.name = 'car';
       this.speed = speed || 0;
       this.alwaysUpdate = true;
-      this.updateColRect(15, 100, 10, 235);
+      this.updateColRect(15, 100, 20, 225);
+      this.stuck = false;
 
       switch(type) {
         case 'blue':
@@ -41,23 +42,29 @@
     },
 
     update : function(time) {
-      if(this.type === 'blue') {
+      if(this.type === 'blue' && !this.stuck) {
         if(me.input.isKeyPressed('left')) {
           this.pos.x -= 10;
         }
         if(me.input.isKeyPressed('right')) {
           this.pos.x += 10;
         }
+
+        if(this.pos.x < 150 || this.pos.x > 720) {
+          game.scene.tarmac.setSpeed(0);
+          this.stuck = true;
+        }
       }
       if(this.type === 'blue') {
         var res = me.game.collide(this);
-        if(res && res.name === 'car') {
+        if(res && res.obj.name === 'car') {
           game.scene.tarmac.setSpeed(0);
+          this.stuck = true;
         }
       }
       this.pos.y += this.speed * game.timer.deltaAsSeconds();
 
-      if(this.pos.y > me.game.viewport.height * 2) {
+      if(this.pos.y > me.game.viewport.height) {
         game.scene.tarmac.removeAndAddCar(this);
       }
 

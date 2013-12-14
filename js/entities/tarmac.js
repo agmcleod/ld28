@@ -12,6 +12,13 @@
     update : function(time) {
       this.parent(time);
       this.pos.y += this.speed * game.timer.deltaAsSeconds();
+      if(this.pos.y >= me.game.viewport.height) {
+        game.scene.tarmac.forChild((function(child) {
+          if(child.name === 'tarmacSection' && child.GUID !== this.GUID) {
+            this.pos.y = child.pos.y - this.height;
+          }
+        }).bind(this));
+      }
       return true;
     }
   });
@@ -20,12 +27,12 @@
     init : function() {
       this.image = me.loader.getImage('tarmac');
       this.name = 'tarmac';
-      this.parent(0, -this.image.height, this.image.width, this.image.height*2);
+      this.parent(0, 0, me.game.viewport.width, me.game.viewport.height);
       this.speed = 0;
       this.addChild(new Section(0, 0, this.image), 2);
-      this.addChild(new Section(0, this.image.height, this.image), 2);
-      this.addChild(me.entityPool.newInstanceOf('car', 300, 800, 'red'), 3);
-      this.addChild(me.entityPool.newInstanceOf('car', 570, 1200, 'green'), 3);
+      this.addChild(new Section(0, me.game.viewport.height, this.image), 2);
+      this.addChild(me.entityPool.newInstanceOf('car', 300, 50, 'red'), 3);
+      this.addChild(me.entityPool.newInstanceOf('car', 570, 400, 'green'), 3);
       this.alwaysUpdate = true;
       this.isRenderable = true;
       this.setSpeed(startSpeed);
@@ -41,7 +48,7 @@
     removeAndAddCar : function(obj) {
       this.removeChild(obj);
       var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(300, 350) : Number.prototype.random(550, 600);
-      var car = me.entityPool.newInstanceOf('car', x, me.game.viewport.height - 256, null, this.speed);
+      var car = me.entityPool.newInstanceOf('car', x, - 256, null, this.speed);
       this.addChild(car, 3);
     },
 
@@ -58,11 +65,6 @@
 
     update : function(time) {
       this.parent(time);
-      this.forChild(function(child) {
-        if(child.pos.y >= me.game.viewport.height * 2) {
-          child.pos.y = 0;
-        }
-      });
       return true;
     }
   });
