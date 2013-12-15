@@ -13,11 +13,13 @@
       this.parent(time);
       this.pos.y += this.speed * game.timer.deltaAsSeconds();
       if(this.pos.y >= me.game.viewport.height) {
-        game.scene.tarmac.forChild((function(child) {
-          if(child.name === 'tarmacSection' && child.GUID !== this.GUID) {
-            this.pos.y = child.pos.y - this.height;
-          }
-        }).bind(this));
+        this.pos.y = -this.height;
+      }
+      if(this.pos.y - this.other.pos.y > this.height) {
+        this.pos.y = this.other.pos.y + this.height;
+      }
+      else if(this.pos.y - this.other.pos.y < -this.height) {
+        this.pos.y = this.other.pos.y - this.height;
       }
       return true;
     }
@@ -36,7 +38,7 @@
     },
 
     addCar : function() {
-      var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(300, 350) : Number.prototype.random(550, 600);
+      var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(300, 350) : Number.prototype.random(560, 600);
       var car = me.entityPool.newInstanceOf('car', x, - 256, null, this.speed);
       this.addChild(car, 3);
     },
@@ -57,8 +59,12 @@
       if(this.children.length > 0) {
         this.destroy();
       }
-      this.addChild(new Section(0, 0, this.image), 2);
-      this.addChild(new Section(0, me.game.viewport.height, this.image), 2);
+      var s1 = new Section(0, 0, this.image);
+      var s2 = new Section(0, me.game.viewport.height, this.image);
+      s1.other = s2;
+      s2.other = s1;
+      this.addChild(s1, 2);
+      this.addChild(s2, 2);
       this.addChild(me.entityPool.newInstanceOf('car', 300, 50, 'red'), 3);
       this.addChild(me.entityPool.newInstanceOf('car', 570, 400, 'green'), 3);
       if(!this.scene.showInstructions) {
@@ -72,6 +78,7 @@
       }
       if(this.speed !== speed) {
         this.speed = speed;
+        game.hudContainer.speedometer.setSpeed(speed / 2);
         this.forChild(function(child) {
           if(child.name === 'tarmacSection') {
             child.speed = speed;
@@ -81,6 +88,13 @@
           }
         });
       }
+    },
+
+    slowToZero : function() {
+      var tween = new me.Tween(this.speed).to(0, 2000).onComplete((function() {
+        this.scene.showStuck();
+      }).bind(this));
+      tween.start();
     },
 
     update : function(time) {

@@ -5,7 +5,7 @@
       this.parent(new me.Vector2d(30, 110), 16, 500);
       this.restart();
       this.z = 5;
-      distanceToCover = 25 * me.game.viewport.height;
+      distanceToCover = 13 * me.game.viewport.height;
     },
 
     addPixelsCovered : function(amt) {
@@ -34,6 +34,7 @@
         this.percentage = this.pixelsCovered / distanceToCover;
         this.shouldUpdate = false;
         if(this.percentage >= 1) {
+          this.percentage = 1;
           game.scene.end();
         }
       }
@@ -51,6 +52,9 @@
 
       this.progress = new Progress();
       me.game.world.addChild(this.progress);
+
+      this.crashImage = game.texture.createSpriteFromName("crash.png");
+      this.stuckImage = game.texture.createSpriteFromName("stuck.png");
 
       me.input.bindKey(me.input.KEY.A, 'left');
       me.input.bindKey(me.input.KEY.D, 'right');
@@ -70,12 +74,22 @@
 
     end : function() {
       game.playScreen.showNextButton();
+      this.tarmac.setSpeed(0);
+      this.player.stuck = true;
     },
 
     restart : function() {
       this.player.restart();
       this.tarmac.restart();
       this.progress.restart();
+    },
+
+    showCrash : function() {
+
+    },
+
+    showStuck : function() {
+
     },
 
     start : function() {

@@ -45,6 +45,8 @@ var game = {
 
     me.entityPool.add('car', game.Car, true);
 
+    this.texture = new me.TextureAtlas(me.loader.getJSON('images'), me.loader.getImage('images'));
+
 
     me.state.set(me.state.MENU, new game.TitleScreen());
     this.playScreen = new game.PlayScreen();

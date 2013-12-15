@@ -62,13 +62,17 @@
           this.pos.x += 8;
         }
 
+        if(me.input.isKeyPressed('brake')) {
+          game.scene.tarmac.setSpeed();
+        }
+
         if(this.pos.x < 150 || this.pos.x > 720) {
-          game.scene.tarmac.setSpeed(0);
+          game.scene.tarmac.slowToZero();
           this.stuck = true;
           game.playScreen.showRestartButton();
         }
         if(this.timer && this.timer.elapsed > 1500) {
-          game.scene.tarmac.setSpeed(game.scene.tarmac.speed + 10);
+          game.scene.tarmac.setSpeed(game.scene.tarmac.speed + 20);
           this.timer.reset();
         }
       }

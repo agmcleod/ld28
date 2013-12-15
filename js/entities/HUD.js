@@ -10,31 +10,28 @@ game.HUD = game.HUD || {};
 game.HUD.Container = me.ObjectContainer.extend({
 
   init: function() {
-    // call the constructor
     this.parent();
 
-    // persistent across level change
+    this.font = new me.Font('Arial', '24px', '#f00');
+
     this.isPersistent = true;
 
-    // non collidable
     this.collidable = false;
 
-    // make sure our object is always draw first
     this.z = Infinity;
 
-    // give a name
     this.name = "HUD";
 
-    // add our child score object at the top left corner
-    this.addChild(new game.HUD.ScoreItem(5, 5));
-    this.nextButton = new game.HUD.nextButton();
-    this.restartButton = new game.HUD.restartButton();
-    this.addChild(nextButton);
-    this.addChild(restartButton);
+    this.nextButton = new game.HUD.NextButton();
+    this.restartButton = new game.HUD.RestartButton();
+    this.speedometer = new game.HUD.Speedometer(this.font);
+    this.addChild(this.speedometer);
+    this.addChild(this.nextButton);
+    this.addChild(this.restartButton);
   }
 });
 
-game.HUD.nextButton = me.AnimationSheet.extend({
+game.HUD.NextButton = me.AnimationSheet.extend({
   init : function() {
     this.parent(30, 30, me.loader.getImage('buttons'), 160, 64);
     this.addAnimation('idle', [1], 1);
@@ -44,12 +41,38 @@ game.HUD.nextButton = me.AnimationSheet.extend({
   },
 
   clicked : function() {
+    if(!this.visible) return null;
     game.playScreen.nextScene();
     this.visible = false;
   }
 });
 
-game.HUD.restartButton = me.AnimationSheet.extend({
+game.HUD.Speedometer = me.Renderable.extend({
+  init : function(font) {
+    this.parent(new me.Vector2d(800, 10), 200, 40);
+    this.font = font;
+    this.speed = 0;
+    this.visible = true;
+  },
+
+  draw : function(ctx) {
+    this.font.draw(ctx, 'Speed: ' + this.speed, this.pos.x, this.pos.y);
+  },
+
+  setSpeed : function(speed) {
+    this.speed = speed;
+    this.shouldUpdate = true;
+  },
+
+  update : function() {
+    if(this.shouldUpdate) {
+      this.shouldUpdate = false
+      return true;
+    }
+  }
+})
+
+game.HUD.RestartButton = me.AnimationSheet.extend({
   init : function() {
     this.parent(30, 30, me.loader.getImage('buttons'), 160, 64);
     this.addAnimation('idle', [0], 1);
@@ -59,49 +82,8 @@ game.HUD.restartButton = me.AnimationSheet.extend({
   },
 
   clicked : function() {
+    if(!this.visible) return null;
     game.scene.restart();
     this.visible = false;
   }
-});
-
-/**
- * a basic HUD item to display score
- */
-game.HUD.ScoreItem = me.Renderable.extend({
-  /**
-   * constructor
-   */
-  init: function(x, y) {
-
-    // call the parent constructor
-    // (size does not matter here)
-    this.parent(new me.Vector2d(x, y), 10, 10);
-
-    // local copy of the global score
-    this.score = -1;
-
-    // make sure we use screen coordinates
-    this.floating = true;
-  },
-
-  /**
-   * update function
-   */
-  update : function () {
-    // we don't draw anything fancy here, so just
-    // return true if the score has been updated
-    if (this.score !== me.game.score) {
-      this.score = me.game.score;
-      return true;
-    }
-    return false;
-  },
-
-  /**
-   * draw the score
-   */
-  draw : function (context) {
-    // draw it baby !
-  }
-
 });
