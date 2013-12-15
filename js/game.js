@@ -54,7 +54,7 @@ var game = {
     me.state.set(me.state.GAME_END, new game.EndScreen());
 
     // Start the game.
-    me.state.change(me.state.PLAY);
+    me.state.change(me.state.MENU);
   },
 
   pauseChildTimers : function(container) {

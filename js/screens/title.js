@@ -1,16 +1,28 @@
+var IntroImage = me.SpriteObject.extend({
+  init : function() {
+    this.parent(0, 0, me.loader.getImage('intro'), 1024, 768);
+    this.isRenderable = true;
+  }
+});
+
 game.TitleScreen = me.ScreenObject.extend({
-  /**
-   *  action to perform on state change
-   */
-  onResetEvent: function() {
-      ; // TODO
+  init : function() {
+    this.parent(true);
+  },
+
+  onResetEvent : function() {
+    me.input.bindKey(me.input.KEY.ENTER, 'enter');
+    me.game.world.addChild(new IntroImage(), 1);
   },
 
 
-  /**
-   *  action to perform when leaving this screen (state change)
-   */
-  onDestroyEvent: function() {
-    ; // TODO
+  onDestroyEvent : function() {
+    me.input.unbindKey(me.input.KEY.ENTER);
+  },
+
+  update : function() {
+    if(me.input.isKeyPressed('enter')) {
+      me.state.change(me.state.PLAY);
+    }
   }
 });

@@ -1,6 +1,7 @@
 game.DriveControlInstructions = me.SpriteObject.extend({
   init : function() {
-    this.parent(630, 50, me.loader.getImage('instructions-desktop'), 388, 186);
+    var image = me.loader.getImage('instructions-desktop');
+    this.parent(630, 50, image, image.width, image.height);
     this.z = 99;
   },
 

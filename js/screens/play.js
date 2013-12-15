@@ -24,13 +24,15 @@
 
     onResetEvent: function() {
       me.input.bindKey(me.input.KEY.ENTER, 'enter');
-      game.scene = new game.BrotherScene();
       game.timer = new game.Timer();
-      me.game.world.addChild(game.scene);
-      // add our HUD to the game world
-      me.game.world.addChild(new Background());
+      game.scene = new game.BrotherScene();
       game.hudContainer = new game.HUD.Container();
+
+      me.game.world.addChild(game.scene);
+      me.game.world.addChild(new Background());
       me.game.world.addChild(game.hudContainer);
+
+      me.audio.playTrack('ld28');
     },
 
 
