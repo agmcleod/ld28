@@ -25,9 +25,11 @@ game.HUD.Container = me.ObjectContainer.extend({
     this.nextButton = new game.HUD.NextButton();
     this.restartButton = new game.HUD.RestartButton();
     this.speedometer = new game.HUD.Speedometer(this.font);
+    this.timeRemaining = new game.HUD.TimeRemaining(this.font);
     this.addChild(this.speedometer);
     this.addChild(this.nextButton);
     this.addChild(this.restartButton);
+    this.addChild(this.timeRemaining);
   }
 });
 
@@ -47,12 +49,31 @@ game.HUD.NextButton = me.AnimationSheet.extend({
   }
 });
 
+game.HUD.TimeRemaining = me.Renderable.extend({
+  init : function(font) {
+    this.parent(new me.Vector2d(800, 50), 100, 40);
+    this.font = font;
+    this.remaining = 0;
+    this.visible = false;
+  },
+
+  draw : function(ctx) {
+    this.font.draw(ctx, 'Seconds left: ' + this.remaining, this.pos.x, this.pos.y);
+  },
+
+  setRemaining : function(amt) {
+    if(this.remaining !== amt) {
+      this.remaining = amt;
+    }
+  }
+});
+
 game.HUD.Speedometer = me.Renderable.extend({
   init : function(font) {
     this.parent(new me.Vector2d(800, 10), 200, 40);
     this.font = font;
     this.speed = 0;
-    this.visible = true;
+    this.visible = false;
   },
 
   draw : function(ctx) {
@@ -70,7 +91,7 @@ game.HUD.Speedometer = me.Renderable.extend({
       return true;
     }
   }
-})
+});
 
 game.HUD.RestartButton = me.AnimationSheet.extend({
   init : function() {

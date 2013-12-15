@@ -9,6 +9,14 @@
 	"sourceSize": {"w":500,"h":250}
 },
 {
+	"filename": "outoftime.png",
+	"frame": {"x":2,"y":498,"w":456,"h":244},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":29,"y":5,"w":456,"h":244},
+	"sourceSize": {"w":500,"h":250}
+},
+{
 	"filename": "stuck.png",
 	"frame": {"x":2,"y":252,"w":456,"h":244},
 	"rotated": false,
@@ -21,8 +29,8 @@
 	"version": "1.0",
 	"image": "images.png",
 	"format": "RGBA8888",
-	"size": {"w":512,"h":512},
+	"size": {"w":512,"h":1024},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:581852fb27e0fc48cfe01e8741c92263:225f68fa8510500a7c3bf9a796aa6236:9be8c185d95a5be4a06ec0067a3d8380$"
+	"smartupdate": "$TexturePacker:SmartUpdate:13e5dac0ebf3af6ada062e1468c4333f:34562933c646843f8e79c04288f1561d:9be8c185d95a5be4a06ec0067a3d8380$"
 }
 }

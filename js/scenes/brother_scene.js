@@ -1,9 +1,18 @@
 (function() {
-  var distanceToCover;
+  var distanceToCover, startSeconds = 80;
 
   var CrashImage = me.SpriteObject.extend({
     init : function() {
       var region = game.texture.getRegion('crash.png');
+      this.parent(me.game.viewport.width / 2 - region.width / 2, me.game.viewport.height / 2 - region.height / 2, game.texture.getTexture(), region.width, region.height);
+      this.offset.setV(region.offset);
+      this.isRenderable = true;
+    }
+  });
+
+  var OutOfTimeImage = me.SpriteObject.extend({
+    init : function() {
+      var region = game.texture.getRegion('outoftime.png');
       this.parent(me.game.viewport.width / 2 - region.width / 2, me.game.viewport.height / 2 - region.height / 2, game.texture.getTexture(), region.width, region.height);
       this.offset.setV(region.offset);
       this.isRenderable = true;
@@ -49,12 +58,12 @@
     },
 
     update : function() {
-      if(this.shouldUpdate) {
+      if(this.shouldUpdate && this.percentage < 1) {
         this.percentage = this.pixelsCovered / distanceToCover;
         this.shouldUpdate = false;
         if(this.percentage >= 1) {
           this.percentage = 1;
-          game.scene.end();
+          game.scene.reachEnd();
         }
       }
     }
@@ -73,7 +82,10 @@
       me.game.world.addChild(this.progress);
 
       this.crashImage = new CrashImage();
+      this.outoftimeImage = new OutOfTimeImage();
       this.stuckImage = new StuckImage();
+      this.atEnd = false;
+      this.secondsLeft = startSeconds;
 
       me.input.bindKey(me.input.KEY.A, 'left');
       me.input.bindKey(me.input.KEY.D, 'right');
@@ -94,19 +106,32 @@
     end : function() {
       game.playScreen.showNextButton();
       this.tarmac.setSpeed(0);
+      game.hudContainer.speedometer.visible = false;
+      game.hudContainer.timeRemaining.visible = false;
       this.player.stuck = true;
+    },
+
+    reachEnd : function() {
+      this.tarmac.addHouse();
+      this.atEnd = true;
     },
 
     restart : function() {
       this.player.restart();
       this.tarmac.restart();
       this.progress.restart();
+      this.secondsLeft = startSeconds;
       if(me.game.world.hasChild(this.crashImage)) me.game.world.removeChild(this.crashImage);
+      if(me.game.world.hasChild(this.outoftimeImage)) me.game.world.removeChild(this.outoftimeImage);
       if(me.game.world.hasChild(this.stuckImage)) me.game.world.removeChild(this.stuckImage);
     },
 
     showCrash : function() {
-      me.game.world.addChild(this.crashImage, 10);
+      me.game.world.addChild(this.crashImage, 5);
+    },
+
+    showOutOfTime : function() {
+      me.game.world.addChild(this.outoftimeImage, 5);
     },
 
     showStuck : function() {
@@ -117,6 +142,25 @@
       this.player.stuck = false;
       this.tarmac.setSpeed();
       this.showInstructions = false;
+      game.hudContainer.timeRemaining.visible = true;
+      game.hudContainer.speedometer.visible = true;
+    },
+
+    stop : function() {
+      this.tarmac.setSpeed(0);
+      this.player.stuck = true;
+      game.playScreen.showRestartButton();
+    },
+
+    update : function(time) {
+      this.parent(time);
+      this.secondsLeft -= game.timer.deltaAsSeconds();
+      if(this.secondsLeft < 0) this.secondsLeft = 0;
+      game.hudContainer.timeRemaining.setRemaining(~~this.secondsLeft);
+      if(this.secondsLeft == 0 && this.tarmac.speed > 0) {
+        this.stop();
+        this.showOutOfTime();
+      }
     }
   });
 

@@ -69,9 +69,7 @@
         }
 
         if(this.pos.x < 150 || this.pos.x > 720) {
-          game.scene.tarmac.slowToZero();
-          this.stuck = true;
-          game.playScreen.showRestartButton();
+          game.scene.stop();
           game.scene.showStuck();
         }
         if(this.timer && this.timer.elapsed > 1500) {
@@ -82,9 +80,7 @@
       if(this.type === 'blue') {
         var res = me.game.collide(this);
         if(res && res.obj.name === 'car' && !this.crashed) {
-          game.scene.tarmac.setSpeed(0);
-          this.stuck = true;
-          game.playScreen.showRestartButton();
+          game.scene.stop();
           game.scene.showCrash();
           this.crashed = true;
         }

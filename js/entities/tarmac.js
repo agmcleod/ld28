@@ -1,5 +1,20 @@
 (function() {
   var startSpeed = 200;
+  var House = me.SpriteObject.extend({
+    init : function() {
+      this.parent(0, -768, me.loader.getImage('house'), 1024, 768);
+      this.name = 'house';
+      this.isRenderable = true;
+      this.alwaysUpdate = true;
+      this.speed = 0;
+    },
+
+    update : function(time) {
+      this.parent(time);
+      this.pos.y += this.speed * game.timer.deltaAsSeconds();
+    }
+  });
+
   var Section = me.SpriteObject.extend({
     init : function(x, y, image) {
       this.parent(x, y, image, image.width, image.height);
@@ -12,7 +27,7 @@
     update : function(time) {
       this.parent(time);
       this.pos.y += this.speed * game.timer.deltaAsSeconds();
-      if(this.pos.y >= me.game.viewport.height) {
+      if(!game.scene.atEnd && this.pos.y >= me.game.viewport.height) {
         this.pos.y = -this.height;
       }
       if(this.pos.y - this.other.pos.y > this.height) {
@@ -34,6 +49,8 @@
       this.speed = 0;
       this.alwaysUpdate = true;
       this.isRenderable = true;
+      this.spawnCars = true;
+      this.house = new House();
       this.restart();
     },
 
@@ -41,6 +58,12 @@
       var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(300, 350) : Number.prototype.random(560, 600);
       var car = me.entityPool.newInstanceOf('car', x, - 256, null, this.speed);
       this.addChild(car, 3);
+    },
+
+    addHouse : function() {
+      this.spawnCars = false;
+      this.house.speed = this.speed;
+      this.addChild(this.house, 2);
     },
 
     forChild : function(fn) {
@@ -52,7 +75,7 @@
 
     removeAndAddCar : function(obj) {
       this.removeChild(obj);
-      this.addCar();
+      if(this.spawnCars) this.addCar();
     },
 
     restart : function() {
@@ -80,7 +103,7 @@
         this.speed = speed;
         game.hudContainer.speedometer.setSpeed(speed / 2);
         this.forChild(function(child) {
-          if(child.name === 'tarmacSection') {
+          if(child.name === 'tarmacSection' || child.name === 'house') {
             child.speed = speed;
           }
           else if(child.name === 'car') {
@@ -90,14 +113,13 @@
       }
     },
 
-    slowToZero : function() {
-      this.scene.showStuck();
-      this.setSpeed(0);
-    },
-
     update : function(time) {
       this.parent(time);
       this.scene.progress.addPixelsCovered(this.speed * game.timer.deltaAsSeconds());
+      if(this.scene.atEnd && this.house.pos.y >= 0) {
+        this.house.pos.y == 0;
+        this.scene.end();
+      }
       return true;
     }
   });
