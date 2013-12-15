@@ -1,5 +1,24 @@
 (function() {
   var distanceToCover;
+
+  var CrashImage = me.SpriteObject.extend({
+    init : function() {
+      var region = game.texture.getRegion('crash.png');
+      this.parent(me.game.viewport.width / 2 - region.width / 2, me.game.viewport.height / 2 - region.height / 2, game.texture.getTexture(), region.width, region.height);
+      this.offset.setV(region.offset);
+      this.isRenderable = true;
+    }
+  });
+
+  var StuckImage = me.SpriteObject.extend({
+    init : function() {
+      var region = game.texture.getRegion('stuck.png');
+      this.parent(me.game.viewport.width / 2 - region.width / 2, me.game.viewport.height / 2 - region.height / 2, game.texture.getTexture(), region.width, region.height);
+      this.offset.setV(region.offset);
+      this.isRenderable = true;
+    }
+  });
+
   var Progress = me.Renderable.extend({
     init : function() {
       this.parent(new me.Vector2d(30, 110), 16, 500);
@@ -53,8 +72,8 @@
       this.progress = new Progress();
       me.game.world.addChild(this.progress);
 
-      this.crashImage = game.texture.createSpriteFromName("crash.png");
-      this.stuckImage = game.texture.createSpriteFromName("stuck.png");
+      this.crashImage = new CrashImage();
+      this.stuckImage = new StuckImage();
 
       me.input.bindKey(me.input.KEY.A, 'left');
       me.input.bindKey(me.input.KEY.D, 'right');
@@ -82,14 +101,16 @@
       this.player.restart();
       this.tarmac.restart();
       this.progress.restart();
+      if(me.game.world.hasChild(this.crashImage)) me.game.world.removeChild(this.crashImage);
+      if(me.game.world.hasChild(this.stuckImage)) me.game.world.removeChild(this.stuckImage);
     },
 
     showCrash : function() {
-
+      me.game.world.addChild(this.crashImage, 10);
     },
 
     showStuck : function() {
-
+      me.game.world.addChild(this.stuckImage, 5);
     },
 
     start : function() {

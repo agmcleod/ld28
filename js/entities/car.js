@@ -17,6 +17,7 @@
       this.alwaysUpdate = true;
       this.updateColRect(15, 100, 20, 225);
       this.stuck = true;
+      this.crashed = false;
 
       if(type === 'blue') {
         this.timer = new game.Timer();
@@ -49,6 +50,7 @@
       if(this.type === 'blue') {
         this.pos.x = 300;
         this.stuck = false;
+        this.crashed = false;
       }
     },
 
@@ -70,6 +72,7 @@
           game.scene.tarmac.slowToZero();
           this.stuck = true;
           game.playScreen.showRestartButton();
+          game.scene.showStuck();
         }
         if(this.timer && this.timer.elapsed > 1500) {
           game.scene.tarmac.setSpeed(game.scene.tarmac.speed + 20);
@@ -78,10 +81,12 @@
       }
       if(this.type === 'blue') {
         var res = me.game.collide(this);
-        if(res && res.obj.name === 'car') {
+        if(res && res.obj.name === 'car' && !this.crashed) {
           game.scene.tarmac.setSpeed(0);
           this.stuck = true;
           game.playScreen.showRestartButton();
+          game.scene.showCrash();
+          this.crashed = true;
         }
       }
       this.pos.y += this.speed * game.timer.deltaAsSeconds();

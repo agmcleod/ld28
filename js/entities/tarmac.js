@@ -91,10 +91,8 @@
     },
 
     slowToZero : function() {
-      var tween = new me.Tween(this.speed).to(0, 2000).onComplete((function() {
-        this.scene.showStuck();
-      }).bind(this));
-      tween.start();
+      this.scene.showStuck();
+      this.setSpeed(0);
     },
 
     update : function(time) {
