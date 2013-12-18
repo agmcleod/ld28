@@ -1,11 +1,12 @@
 (function() {
   var colours = ['yellow', 'green', 'red', 'gray'];
+  var maxAccelX = 7;
   game.Car = me.ObjectEntity.extend({
     init : function(x, y, type, speed) {
       var settings = {
         image : 'cars',
         spritewidth : '128',
-        spriteheight : '256'
+        spriteheight : '192'
       };
       if(typeof type === 'undefined' || type === null) {
         type = colours[Number.prototype.random(0, colours.length-1)];
@@ -15,9 +16,10 @@
       this.name = 'car';
       this.speed = speed || 0;
       this.alwaysUpdate = true;
-      this.updateColRect(15, 100, 20, 225);
+      this.updateColRect(17, 94, 10, 170);
       this.stuck = true;
       this.crashed = false;
+      this.accel = new me.Vector2d(0, 0);
 
       if(type === 'blue') {
         this.timer = new game.Timer();
@@ -48,7 +50,7 @@
 
     restart : function() {
       if(this.type === 'blue') {
-        this.pos.x = 300;
+        this.pos.x = 400;
         this.stuck = false;
         this.crashed = false;
       }
@@ -58,17 +60,29 @@
       if(this.timer) this.timer.update();
       if(this.type === 'blue' && !this.stuck) {
         if(me.input.isKeyPressed('left')) {
-          this.pos.x -= 8;
+          this.accel.x -= 1;
+          if(this.accel.x < -maxAccelX) this.accel.x = -5;
+          this.pos.x += this.accel.x;
         }
-        if(me.input.isKeyPressed('right')) {
-          this.pos.x += 8;
+        else if(me.input.isKeyPressed('right')) {
+          this.accel.x += 1;
+          if(this.accel.x > maxAccelX) this.accel.x = 5;
+          this.pos.x += this.accel.x;
+        }
+        else {
+          if(this.accel.x > 0) {
+            this.accel.x--;
+          }
+          else if(this.accel.x < 0) {
+            this.accel.x++;
+          }
         }
 
         if(me.input.isKeyPressed('brake')) {
           game.scene.tarmac.setSpeed();
         }
 
-        if(this.pos.x < 150 || this.pos.x > 720) {
+        if(this.pos.x < 300 || this.pos.x > 600) {
           game.scene.stop();
           game.scene.showStuck();
         }

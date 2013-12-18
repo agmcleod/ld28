@@ -74,7 +74,7 @@
       this.showInstructions = true;
       this.tarmac = new game.Tarmac(this);
       me.game.world.addChild(this.tarmac);
-      this.player = new game.Car(300, me.game.viewport.height - 256, 'blue');
+      this.player = new game.Car(400, me.game.viewport.height - 256, 'blue');
       me.game.world.addChild(this.player, 3);
       me.game.world.addChild(new game.DriveControlInstructions());
 

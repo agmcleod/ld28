@@ -55,7 +55,7 @@
     },
 
     addCar : function() {
-      var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(300, 350) : Number.prototype.random(560, 600);
+      var x = !!Number.prototype.random(0, 1) ? Number.prototype.random(381, 390) : Number.prototype.random(518, 525);
       var car = me.entityPool.newInstanceOf('car', x, - 256, null, this.speed);
       this.addChild(car, 3);
     },
@@ -88,8 +88,8 @@
       s2.other = s1;
       this.addChild(s1, 2);
       this.addChild(s2, 2);
-      this.addChild(me.entityPool.newInstanceOf('car', 300, 50, 'red'), 3);
-      this.addChild(me.entityPool.newInstanceOf('car', 570, 400, 'green'), 3);
+      this.addChild(me.entityPool.newInstanceOf('car', 382, 20, 'red'), 3);
+      this.addChild(me.entityPool.newInstanceOf('car', 515, 500, 'green'), 3);
       if(!this.scene.showInstructions) {
         this.setSpeed();
       }
