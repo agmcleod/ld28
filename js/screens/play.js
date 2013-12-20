@@ -29,14 +29,14 @@
       else {
         game.scene = this.scenes[this.currentScene];
         me.game.world.addChild(game.scene);
-        game.scene.start();
+        game.scene.stage();
       }
     },
 
     onResetEvent: function() {
       me.input.bindKey(me.input.KEY.ENTER, 'enter');
       game.timer = new game.Timer();
-      game.scene = new game.BrotherScene();
+      game.scene = new game.MotherScene();
       game.hudContainer = new game.HUD.Container();
       this.background = new Background();
       me.game.world.addChild(game.scene);

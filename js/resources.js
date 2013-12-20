@@ -8,5 +8,6 @@ game.resources = [
   { name : 'intro', type : 'image', src : 'data/img/intro.png' },
   { name : 'instructions-desktop', type : 'image', src : 'data/img/instructions-desktop.png' },
   { name : 'ld28', type : 'audio', src : 'data/sfx/', channel : 1 },
+  { name : 'mother-bg', type : 'image', src : 'data/img/mother-bg.png' },
   { name : 'tarmac', type : 'image', src : 'data/img/tarmac.png' }
 ];
