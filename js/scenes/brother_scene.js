@@ -1,5 +1,5 @@
 (function() {
-  var distanceToCover, startSeconds = 80;
+  var distanceToCover, startSeconds = 65;
 
   var CrashImage = me.SpriteObject.extend({
     init : function() {
@@ -33,7 +33,7 @@
       this.parent(new me.Vector2d(30, 110), 16, 500);
       this.restart();
       this.z = 5;
-      distanceToCover = 13 * me.game.viewport.height;
+      distanceToCover = 10 * me.game.viewport.height;
     },
 
     addPixelsCovered : function(amt) {
@@ -73,13 +73,9 @@
     init : function() {
       this.showInstructions = true;
       this.tarmac = new game.Tarmac(this);
-      me.game.world.addChild(this.tarmac);
       this.player = new game.Car(400, me.game.viewport.height - 256, 'blue');
-      me.game.world.addChild(this.player, 3);
-      me.game.world.addChild(new game.DriveControlInstructions());
 
       this.progress = new Progress();
-      me.game.world.addChild(this.progress);
 
       this.crashImage = new CrashImage();
       this.outoftimeImage = new OutOfTimeImage();
@@ -138,6 +134,14 @@
       me.game.world.addChild(this.stuckImage, 5);
     },
 
+    stage : function() {
+      me.game.world.addChild(this.tarmac);
+      me.game.world.addChild(this.player, 3);
+      me.game.world.addChild(new game.DriveControlInstructions());
+      me.game.world.addChild(this.progress);
+      this.tarmac.restart();
+    },
+
     start : function() {
       this.player.stuck = false;
       this.tarmac.setSpeed();
@@ -157,7 +161,7 @@
       this.secondsLeft -= game.timer.deltaAsSeconds();
       if(this.secondsLeft < 0) this.secondsLeft = 0;
       game.hudContainer.timeRemaining.setRemaining(~~this.secondsLeft);
-      if(this.secondsLeft == 0 && this.tarmac.speed > 0) {
+      if(this.secondsLeft === 0 && this.tarmac.speed > 0) {
         this.stop();
         this.showOutOfTime();
       }

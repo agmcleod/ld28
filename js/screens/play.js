@@ -12,14 +12,25 @@
 
 
   game.PlayScreen = me.ScreenObject.extend({
-
     init : function() {
-      this.parent(true);
+      this.parent(true, true);
+      this.scenes = [new game.BrotherScene(), new game.MotherScene(), new game.FatherScene()];
+      this.currentScene = 0;
     },
 
     nextScene : function() {
-      // TODO : implement actual scene switching
-      me.state.change(me.state.GAME_END);
+      this.scenes[this.currentScene].cleanup();
+      me.game.world.addChild(this.background);
+      this.currentScene++;
+      if(typeof this.scenes[this.currentScene] === 'undefined') {
+        me.game.world.removeChild(this);
+        me.state.change(me.state.GAME_END);
+      }
+      else {
+        game.scene = this.scenes[this.currentScene];
+        me.game.world.addChild(game.scene);
+        game.scene.start();
+      }
     },
 
     onResetEvent: function() {
@@ -27,12 +38,12 @@
       game.timer = new game.Timer();
       game.scene = new game.BrotherScene();
       game.hudContainer = new game.HUD.Container();
-
+      this.background = new Background();
       me.game.world.addChild(game.scene);
-      me.game.world.addChild(new Background());
+      me.game.world.addChild(this.background);
       me.game.world.addChild(game.hudContainer);
-
       me.audio.playTrack('ld28');
+      game.scene.stage();
     },
 
 

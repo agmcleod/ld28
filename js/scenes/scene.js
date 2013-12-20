@@ -4,7 +4,7 @@ game.Scene = Object.extend({
   },
 
   cleanup : function() {
-    me.game.world.reset();
+    me.game.world.destroy();
   },
 
   update : function(time) {

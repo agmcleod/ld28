@@ -27,8 +27,9 @@ game.Timer = Object.extend({
 
   update : function() {
     var n = me.timer.getTime();
-    this.elapsed += n - this.last;
-    this.delta = n - this.last;
+    var d = n - this.last;
+    this.elapsed += d
+    this.delta = d;
     this.last = n;
   }
 });

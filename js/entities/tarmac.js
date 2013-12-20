@@ -51,7 +51,7 @@
       this.isRenderable = true;
       this.spawnCars = true;
       this.house = new House();
-      this.restart();
+      this.z = 1;
     },
 
     addCar : function() {
