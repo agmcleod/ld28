@@ -4,6 +4,7 @@ game.Scene = Object.extend({
   },
 
   cleanup : function() {
+    me.audo.stopTrack();
     me.game.world.destroy();
   },
 

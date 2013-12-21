@@ -135,6 +135,7 @@
     },
 
     stage : function() {
+      me.audio.playTrack('ld28');
       me.game.world.addChild(this.tarmac);
       me.game.world.addChild(this.player, 3);
       me.game.world.addChild(new game.DriveControlInstructions());

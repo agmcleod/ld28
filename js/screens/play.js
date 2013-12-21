@@ -42,7 +42,6 @@
       me.game.world.addChild(game.scene);
       me.game.world.addChild(this.background);
       me.game.world.addChild(game.hudContainer);
-      me.audio.playTrack('ld28');
       game.scene.stage();
     },
 
