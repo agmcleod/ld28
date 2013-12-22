@@ -4,7 +4,7 @@ game.Scene = Object.extend({
   },
 
   cleanup : function() {
-    me.audo.stopTrack();
+    me.audio.stopTrack();
     me.game.world.destroy();
   },
 

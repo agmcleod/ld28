@@ -1,5 +1,5 @@
 (function() {
-  var distanceToCover, startSeconds = 65;
+  var distanceToCover, startSeconds = 32;
 
   var CrashImage = me.SpriteObject.extend({
     init : function() {

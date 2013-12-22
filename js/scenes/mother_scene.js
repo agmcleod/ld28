@@ -34,9 +34,14 @@
     restart : function() {
       collected = 0;
       secondsLeft = 20;
+      this.loss = false;
       for(var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
         if(!me.game.world.hasChild(item)) {
+          if(!item.hasPointerEvent) {
+            me.input.registerPointerEvent('mousedown', item, item.clicked.bind(item));
+            item.hasPointerEvent = true;
+          }
           me.game.world.addChild(item);
         }
       }
@@ -46,18 +51,24 @@
       me.game.world.addChild(this.ground);
       me.game.world.addChild(this.buildings);
       game.hudContainer.timeRemaining.visible = true;
+      this.loss = false;
       for(var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
         me.game.world.addChild(item);
+        item.hasPointerEvent = true;
         me.input.registerPointerEvent('mousedown', item, item.clicked.bind(item));
       }
     },
 
-    update : function() {
-      secondsLeft -= game.timer.deltaAsSeconds();
+    update : function(time) {
+      if(!this.loss) secondsLeft -= game.timer.deltaAsSeconds();
       game.hudContainer.timeRemaining.setRemaining(~~secondsLeft);
       if(secondsLeft < 0) {
         secondsLeft = 0;
+        if(!game.hudContainer.restartButton.visible) {
+          this.loss = true;
+          game.hudContainer.restartButton.visible = true;
+        }
       }
     }
   });

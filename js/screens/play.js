@@ -36,7 +36,7 @@
     onResetEvent: function() {
       me.input.bindKey(me.input.KEY.ENTER, 'enter');
       game.timer = new game.Timer();
-      game.scene = new game.MotherScene();
+      game.scene = this.scenes[this.currentScene];
       game.hudContainer = new game.HUD.Container();
       this.background = new Background();
       me.game.world.addChild(game.scene);
@@ -62,7 +62,6 @@
     },
 
     update : function(time) {
-      game.scene.update(time);
       game.timer.update();
     }
   });

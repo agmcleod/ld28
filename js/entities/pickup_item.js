@@ -18,8 +18,10 @@
     },
 
     clicked : function() {
+      if(game.scene.loss) return false;
       game.scene.itemCollected();
       me.game.world.removeChild(this);
+      this.hasPointerEvent = false;
       me.input.releasePointerEvent('mousedown', this);
     }
   });
