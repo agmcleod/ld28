@@ -12,12 +12,14 @@ game.TitleScreen = me.ScreenObject.extend({
 
   onResetEvent : function() {
     me.input.bindKey(me.input.KEY.ENTER, 'enter');
+    me.input.bindTouch(me.input.KEY.ENTER);
     me.game.world.addChild(new IntroImage(), 1);
   },
 
 
   onDestroyEvent : function() {
     me.input.unbindKey(me.input.KEY.ENTER);
+    me.input.unbindTouch();
   },
 
   update : function() {

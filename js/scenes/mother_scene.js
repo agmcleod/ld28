@@ -1,15 +1,64 @@
 (function() {
+  var collected = 0;
+  var secondsLeft = 20;
   game.MotherScene = game.Scene.extend({
     init : function() {
-      this.motherBackground = new game.MotherBackground();
+      this.ground = new game.Ground();
+      this.buildings = new game.Buildings();
+      this.items = [
+        new game.PickupItem(220, 540, 'guitar'),
+        new game.PickupItem(500, 633, 'food'),
+        new game.PickupItem(450, -50, 'lotus'),
+        new game.PickupItem(850, 130, 'candycane'),
+        new game.PickupItem(750, 490, 'chocolate'),
+        new game.PickupItem(600, 150, 'puppy')
+      ];
+    },
+
+    cleanup : function() {
+      game.hudContainer.timeRemaining.visible = false;
+      for(var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+        me.input.releasePointerEvent('mousedown', item);
+      }
+      this.parent();
+    },
+
+    itemCollected : function() {
+      collected++;
+      if(collected >= this.items.length) {
+        game.playScreen.showNextButton();
+      }
+    },
+
+    restart : function() {
+      collected = 0;
+      secondsLeft = 20;
+      for(var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+        if(!me.game.world.hasChild(item)) {
+          me.game.world.addChild(item);
+        }
+      }
     },
 
     stage : function() {
-      me.game.world.addChild(this.motherBackground);
+      me.game.world.addChild(this.ground);
+      me.game.world.addChild(this.buildings);
+      game.hudContainer.timeRemaining.visible = true;
+      for(var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+        me.game.world.addChild(item);
+        me.input.registerPointerEvent('mousedown', item, item.clicked.bind(item));
+      }
     },
 
     update : function() {
-
+      secondsLeft -= game.timer.deltaAsSeconds();
+      game.hudContainer.timeRemaining.setRemaining(~~secondsLeft);
+      if(secondsLeft < 0) {
+        secondsLeft = 0;
+      }
     }
   });
 }).call(this);
