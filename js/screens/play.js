@@ -15,7 +15,7 @@
     init : function() {
       this.parent(true, true);
       this.scenes = [new game.BrotherScene(), new game.MotherScene(), new game.FatherScene()];
-      this.currentScene = 0;
+      this.currentScene = 1;
     },
 
     nextScene : function() {

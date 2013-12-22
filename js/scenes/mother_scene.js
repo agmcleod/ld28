@@ -26,6 +26,7 @@
 
     itemCollected : function() {
       collected++;
+      me.audio.play('collect');
       if(collected >= this.items.length) {
         game.playScreen.showNextButton();
       }
@@ -52,6 +53,7 @@
       me.game.world.addChild(this.buildings);
       game.hudContainer.timeRemaining.visible = true;
       this.loss = false;
+      me.audio.playTrack('ld28-mother');
       for(var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
         me.game.world.addChild(item);
