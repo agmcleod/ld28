@@ -15,7 +15,7 @@
     init : function() {
       this.parent(true, true);
       this.scenes = [new game.BrotherScene(), new game.MotherScene(), new game.FatherScene()];
-      this.currentScene = 1;
+      this.currentScene = 0;
     },
 
     nextScene : function() {
@@ -35,6 +35,8 @@
 
     onResetEvent: function() {
       me.input.bindKey(me.input.KEY.ENTER, 'enter');
+      me.input.bindTouch(me.input.KEY.ENTER);
+
       game.timer = new game.Timer();
       game.scene = this.scenes[this.currentScene];
       game.hudContainer = new game.HUD.Container();
@@ -51,6 +53,7 @@
      */
     onDestroyEvent: function() {
       me.input.unbindKey(me.input.KEY.ENTER);
+      me.input.unbindTouch();
     },
 
     showNextButton : function() {

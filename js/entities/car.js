@@ -59,12 +59,12 @@
     update : function(time) {
       if(this.timer) this.timer.update();
       if(this.type === 'blue' && !this.stuck) {
-        if(me.input.isKeyPressed('left')) {
+        if(me.input.isKeyPressed('left') || this.goLeft) {
           this.accel.x -= 1;
           if(this.accel.x < -maxAccelX) this.accel.x = -5;
           this.pos.x += this.accel.x;
         }
-        else if(me.input.isKeyPressed('right')) {
+        else if(me.input.isKeyPressed('right') || this.goRight) {
           this.accel.x += 1;
           if(this.accel.x > maxAccelX) this.accel.x = 5;
           this.pos.x += this.accel.x;
@@ -78,7 +78,7 @@
           }
         }
 
-        if(me.input.isKeyPressed('brake')) {
+        if(me.input.isKeyPressed('brake') || this.brake) {
           game.scene.tarmac.setSpeed();
         }
 

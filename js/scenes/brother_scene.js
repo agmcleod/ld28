@@ -82,12 +82,9 @@
       this.stuckImage = new StuckImage();
       this.atEnd = false;
       this.secondsLeft = startSeconds;
-
-      me.input.bindKey(me.input.KEY.A, 'left');
-      me.input.bindKey(me.input.KEY.D, 'right');
-      me.input.bindKey(me.input.KEY.LEFT, 'left');
-      me.input.bindKey(me.input.KEY.RIGHT, 'right');
-      me.input.bindKey(me.input.KEY.SPACE, 'brake');
+      this.brakeControlsRect = new me.Rect(new me.Vector2d(200, 400), 624, me.game.viewport.height - 400);
+      this.leftControlsRect = new me.Rect(new me.Vector2d(0, 120), 200, me.game.viewport.height - 120);
+      this.rightControlsRect = new me.Rect(new me.Vector2d(824, 120), 200, me.game.viewport.height - 120);
     },
 
     cleanup : function() {
@@ -135,6 +132,31 @@
     },
 
     stage : function() {
+      var _this = this;
+      me.input.bindKey(me.input.KEY.A, 'left');
+      me.input.bindKey(me.input.KEY.D, 'right');
+      me.input.bindKey(me.input.KEY.LEFT, 'left');
+      me.input.bindKey(me.input.KEY.RIGHT, 'right');
+      me.input.bindKey(me.input.KEY.SPACE, 'brake');
+      me.input.registerPointerEvent('mousedown', this.leftControlsRect, function() {
+        _this.player.goLeft = true;
+      });
+      me.input.registerPointerEvent('mouseup', this.leftControlsRect, function() {
+        _this.player.goLeft = false;
+      });
+      me.input.registerPointerEvent('mousedown', this.rightControlsRect, function() {
+        _this.player.goRight = true;
+      });
+      me.input.registerPointerEvent('mouseup', this.rightControlsRect, function() {
+        _this.player.goRight = false;
+      });
+      me.input.registerPointerEvent('mousedown', this.brakeControlsRect, function() {
+        _this.player.brake = true;
+      });
+      me.input.registerPointerEvent('mouseup', this.brakeControlsRect, function() {
+        _this.player.brake = false;
+      });
+
       me.audio.playTrack('ld28');
       me.game.world.addChild(this.tarmac);
       me.game.world.addChild(this.player, 3);
