@@ -6,7 +6,6 @@
       var region = game.texture.getRegion('crash.png');
       this.parent(me.game.viewport.width / 2 - region.width / 2, me.game.viewport.height / 2 - region.height / 2, game.texture.getTexture(), region.width, region.height);
       this.offset.setV(region.offset);
-      this.isRenderable = true;
     }
   });
 
@@ -15,7 +14,6 @@
       var region = game.texture.getRegion('outoftime.png');
       this.parent(me.game.viewport.width / 2 - region.width / 2, me.game.viewport.height / 2 - region.height / 2, game.texture.getTexture(), region.width, region.height);
       this.offset.setV(region.offset);
-      this.isRenderable = true;
     }
   });
 
@@ -24,7 +22,6 @@
       var region = game.texture.getRegion('stuck.png');
       this.parent(me.game.viewport.width / 2 - region.width / 2, me.game.viewport.height / 2 - region.height / 2, game.texture.getTexture(), region.width, region.height);
       this.offset.setV(region.offset);
-      this.isRenderable = true;
     }
   });
 
@@ -82,9 +79,14 @@
       this.stuckImage = new StuckImage();
       this.atEnd = false;
       this.secondsLeft = startSeconds;
-      this.brakeControlsRect = new me.Rect(new me.Vector2d(200, 400), 624, me.game.viewport.height - 400);
-      this.leftControlsRect = new me.Rect(new me.Vector2d(0, 120), 200, me.game.viewport.height - 120);
-      this.rightControlsRect = new me.Rect(new me.Vector2d(824, 120), 200, me.game.viewport.height - 120);
+      this.brakeControlsRect = new me.Rect(new me.Vector2d(250, 400), 524, me.game.viewport.height - 400);
+      this.leftControlsRect = new me.Rect(new me.Vector2d(0, 120), 250, me.game.viewport.height - 120);
+      this.rightControlsRect = new me.Rect(new me.Vector2d(774, 120), 250, me.game.viewport.height - 120);
+      if(me.device.isMobile) {
+        this.brakeImage = new game.BrakeImage();
+        this.leftArrow = new game.LeftArrowImage();
+        this.rightArrow = new game.RightArrowImage();
+      }
     },
 
     cleanup : function() {
@@ -160,7 +162,14 @@
       me.audio.playTrack('ld28');
       me.game.world.addChild(this.tarmac);
       me.game.world.addChild(this.player, 3);
-      me.game.world.addChild(new game.DriveControlInstructions());
+      if(me.device.isMobile) {
+        me.game.world.addChild(this.brakeImage);
+        me.game.world.addChild(this.leftArrow);
+        me.game.world.addChild(this.rightArrow);
+      }
+      else {
+        me.game.world.addChild(new game.DriveControlInstructions());
+      }
       me.game.world.addChild(this.progress);
       this.tarmac.restart();
     },
@@ -187,6 +196,14 @@
       if(this.secondsLeft === 0 && this.tarmac.speed > 0) {
         this.stop();
         this.showOutOfTime();
+      }
+
+      if(me.device.isMobile && this.showInstructions && me.input.isKeyPressed('enter')) {
+        me.game.world.removeChild(this.leftArrow);
+        me.game.world.removeChild(this.rightArrow);
+        me.game.world.removeChild(this.brakeImage);
+        this.showInstructions = false;
+        this.start();
       }
     }
   });

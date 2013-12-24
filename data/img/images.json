@@ -1,6 +1,14 @@
 {"frames": [
 
 {
+	"filename": "arrow.png",
+	"frame": {"x":1816,"y":2,"w":212,"h":136},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":6,"w":212,"h":136},
+	"sourceSize": {"w":250,"h":150}
+},
+{
 	"filename": "crash.png",
 	"frame": {"x":2,"y":2,"w":494,"h":248},
 	"rotated": false,
@@ -10,15 +18,23 @@
 },
 {
 	"filename": "outoftime.png",
-	"frame": {"x":2,"y":498,"w":456,"h":244},
+	"frame": {"x":956,"y":2,"w":456,"h":244},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":29,"y":5,"w":456,"h":244},
 	"sourceSize": {"w":500,"h":250}
 },
 {
+	"filename": "stop.png",
+	"frame": {"x":1414,"y":2,"w":400,"h":200},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":400,"h":200},
+	"sourceSize": {"w":400,"h":200}
+},
+{
 	"filename": "stuck.png",
-	"frame": {"x":2,"y":252,"w":456,"h":244},
+	"frame": {"x":498,"y":2,"w":456,"h":244},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":29,"y":5,"w":456,"h":244},
@@ -29,8 +45,8 @@
 	"version": "1.0",
 	"image": "images.png",
 	"format": "RGBA8888",
-	"size": {"w":512,"h":1024},
+	"size": {"w":2048,"h":256},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:13e5dac0ebf3af6ada062e1468c4333f:34562933c646843f8e79c04288f1561d:9be8c185d95a5be4a06ec0067a3d8380$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a46c543d8fb3681fec7a9134e265e9dc:debd4830245b1b30f8f1d7007790a20b:9be8c185d95a5be4a06ec0067a3d8380$"
 }
 }
