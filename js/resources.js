@@ -4,6 +4,7 @@ game.resources = [
   { name : 'buttons', type : 'image', src : 'data/img/buttons.png' },
   { name : 'cars', type : 'image', src : 'data/img/cars.png' },
   { name : 'collect', type : 'audio', src : 'data/sfx/', channel : 2 },
+  { name : 'crash', type : 'audio', src : 'data/sfx/', channel : 2 },
   { name : 'dad', type : 'image', src : 'data/img/dad.png' },
   { name : 'end', type : 'image', src : 'data/img/end.png' },
   { name : 'father-intro', type : 'image', src : 'data/img/father-intro.png' },

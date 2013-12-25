@@ -9,6 +9,11 @@
       this.speed = 0;
     },
 
+    reset : function() {
+      this.pos.x = 0;
+      this.pos.y = -768;
+    },
+
     update : function(time) {
       this.parent(time);
       this.pos.y += this.speed * game.timer.deltaAsSeconds();
@@ -21,6 +26,13 @@
       this.name = 'tarmacSection';
       this.alwaysUpdate = true;
       this.isRenderable = true;
+      this.speed = 0;
+      this.orig = new me.Vector2d(x, y);
+    },
+
+    reset : function() {
+      this.pos.x = this.orig.x;
+      this.pos.y = this.orig.y;
       this.speed = 0;
     },
 
@@ -49,9 +61,12 @@
       this.speed = 0;
       this.alwaysUpdate = true;
       this.isRenderable = true;
-      this.spawnCars = true;
       this.house = new House();
       this.z = 1;
+      this.s1 = new Section(0, 0, this.image);
+      this.s2 = new Section(0, me.game.viewport.height, this.image);
+      this.s1.other = this.s2;
+      this.s2.other = this.s1;
     },
 
     addCar : function() {
@@ -81,13 +96,13 @@
     restart : function() {
       if(this.children.length > 0) {
         this.destroy();
+        this.s1.reset();
+        this.s2.reset();
+        this.house.reset();
       }
-      var s1 = new Section(0, 0, this.image);
-      var s2 = new Section(0, me.game.viewport.height, this.image);
-      s1.other = s2;
-      s2.other = s1;
-      this.addChild(s1, 2);
-      this.addChild(s2, 2);
+      this.spawnCars = true;
+      this.addChild(this.s1, 2);
+      this.addChild(this.s2, 2);
       this.addChild(me.entityPool.newInstanceOf('car', 382, 20, 'red'), 3);
       this.addChild(me.entityPool.newInstanceOf('car', 515, 500, 'green'), 3);
       if(!this.scene.showInstructions) {

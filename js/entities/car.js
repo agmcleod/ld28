@@ -97,6 +97,7 @@
           game.scene.stop();
           game.scene.showCrash();
           this.crashed = true;
+          me.audio.play('crash');
         }
       }
       this.pos.y += this.speed * game.timer.deltaAsSeconds();

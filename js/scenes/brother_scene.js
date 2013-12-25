@@ -30,7 +30,7 @@
       this.parent(new me.Vector2d(30, 110), 16, 500);
       this.restart();
       this.z = 5;
-      distanceToCover = 10 * me.game.viewport.height;
+      distanceToCover = 8 * me.game.viewport.height;
     },
 
     addPixelsCovered : function(amt) {
@@ -78,7 +78,6 @@
       this.crashImage = new CrashImage();
       this.outoftimeImage = new OutOfTimeImage();
       this.stuckImage = new StuckImage();
-      this.atEnd = false;
       this.secondsLeft = startSeconds;
       this.brakeControlsRect = new me.Rect(new me.Vector2d(250, 400), 524, me.game.viewport.height - 400);
       this.leftControlsRect = new me.Rect(new me.Vector2d(0, 120), 250, me.game.viewport.height - 120);
@@ -125,6 +124,7 @@
       this.tarmac.restart();
       this.progress.restart();
       this.secondsLeft = startSeconds;
+      this.atEnd = false;
       if(me.game.world.hasChild(this.crashImage)) me.game.world.removeChild(this.crashImage);
       if(me.game.world.hasChild(this.outoftimeImage)) me.game.world.removeChild(this.outoftimeImage);
       if(me.game.world.hasChild(this.stuckImage)) me.game.world.removeChild(this.stuckImage);
