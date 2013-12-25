@@ -68,6 +68,7 @@
 
   game.BrotherScene = game.Scene.extend({
     init : function() {
+      this.parent();
       this.showInstructions = true;
       this.tarmac = new game.Tarmac(this);
       this.player = new game.Car(400, me.game.viewport.height - 256, 'blue');
@@ -95,6 +96,10 @@
       me.input.unbindKey(me.input.KEY.LEFT);
       me.input.unbindKey(me.input.KEY.RIGHT);
       me.input.unbindKey(me.input.KEY.SPACE);
+      for(var r in [this.leftControlsRect, this.rightControlsRect, this.brakeControlsRect]) {
+        me.input.releasePointerEvent('mousedown', r);
+        me.input.releasePointerEvent('mouseup', r);
+      }
       this.parent();
     },
 
@@ -104,6 +109,10 @@
       game.hudContainer.speedometer.visible = false;
       game.hudContainer.timeRemaining.visible = false;
       this.player.stuck = true;
+    },
+
+    load : function() {
+      this.parent('brother-intro');
     },
 
     reachEnd : function() {
@@ -198,7 +207,7 @@
         this.showOutOfTime();
       }
 
-      if(me.device.isMobile && this.showInstructions && me.input.isKeyPressed('enter')) {
+      if(me.device.isMobile && !this.showIntro && this.showInstructions && me.input.isKeyPressed('enter')) {
         me.game.world.removeChild(this.leftArrow);
         me.game.world.removeChild(this.rightArrow);
         me.game.world.removeChild(this.brakeImage);

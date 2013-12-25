@@ -1,6 +1,7 @@
 game.Scene = Object.extend({
   init : function() {
     this.alwaysUpdate = true;
+    this.showIntro = true;
   },
 
   cleanup : function() {
@@ -8,7 +9,17 @@ game.Scene = Object.extend({
     me.game.world.destroy();
   },
 
-  update : function(time) {
+  load : function(baseImage) {
+    var image = me.loader.getImage(baseImage);
+    this.image = new me.SpriteObject(0, 0, image, image.width, image.height);
+    me.game.world.addChild(this.image, 1);
+  },
 
+  update : function(time) {
+    if(this.showIntro && me.input.isKeyPressed('enter')) {
+      me.game.world.removeChild(this.image);
+      this.showIntro = false;
+      this.stage();
+    }
   }
 })

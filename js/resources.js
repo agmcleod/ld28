@@ -1,10 +1,14 @@
 game.resources = [
+  { name : 'brother-intro', type : 'image', src : 'data/img/brother-intro.png' },
   { name : 'buildings', type : 'image', src : 'data/img/buildings.png' },
   { name : 'buttons', type : 'image', src : 'data/img/buttons.png' },
   { name : 'cars', type : 'image', src : 'data/img/cars.png' },
   { name : 'collect', type : 'audio', src : 'data/sfx/', channel : 2 },
+  { name : 'dad', type : 'image', src : 'data/img/dad.png' },
   { name : 'end', type : 'image', src : 'data/img/end.png' },
+  { name : 'father-intro', type : 'image', src : 'data/img/father-intro.png' },
   { name : 'ground', type : 'image', src : 'data/img/ground.png' },
+  { name : 'ground-snow', type : 'image', src : 'data/img/ground-snow.png' },
   { name : 'house', type : 'image', src : 'data/img/house.png' },
   { name : 'images', type : 'image', src : 'data/img/images.png' },
   { name : 'images', type : 'json', src : 'data/img/images.json' },
@@ -12,6 +16,8 @@ game.resources = [
   { name : 'instructions-desktop', type : 'image', src : 'data/img/instructions-desktop.png' },
   { name : 'ld28', type : 'audio', src : 'data/sfx/', channel : 1 },
   { name : 'ld28-mother', type : 'audio', src : 'data/sfx/', channel : 1 },
+  { name : 'mother-intro', type : 'image', src : 'data/img/mother-intro.png' },
   { name : 'mother-scene-items', type : 'image', src : 'data/img/mother-scene-items.png' },
-  { name : 'tarmac', type : 'image', src : 'data/img/tarmac.png' }
+  { name : 'tarmac', type : 'image', src : 'data/img/tarmac.png' },
+  { name : 'tree', type : 'image', src : 'data/img/tree.png' },
 ];

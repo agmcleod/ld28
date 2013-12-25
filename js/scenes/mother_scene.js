@@ -3,6 +3,7 @@
   var secondsLeft = 20;
   game.MotherScene = game.Scene.extend({
     init : function() {
+      this.parent();
       this.ground = new game.Ground();
       this.buildings = new game.Buildings();
       this.items = [
@@ -30,6 +31,10 @@
       if(collected >= this.items.length) {
         game.playScreen.showNextButton();
       }
+    },
+
+    load : function() {
+      this.parent('mother-intro');
     },
 
     restart : function() {
@@ -63,6 +68,7 @@
     },
 
     update : function(time) {
+      this.parent(time);
       if(!this.loss) secondsLeft -= game.timer.deltaAsSeconds();
       game.hudContainer.timeRemaining.setRemaining(~~secondsLeft);
       if(secondsLeft < 0) {

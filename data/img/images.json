@@ -2,10 +2,10 @@
 
 {
 	"filename": "arrow.png",
-	"frame": {"x":1816,"y":2,"w":212,"h":136},
+	"frame": {"x":1816,"y":2,"w":210,"h":136},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":10,"y":6,"w":212,"h":136},
+	"spriteSourceSize": {"x":20,"y":8,"w":210,"h":136},
 	"sourceSize": {"w":250,"h":150}
 },
 {
@@ -47,6 +47,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":256},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:a46c543d8fb3681fec7a9134e265e9dc:debd4830245b1b30f8f1d7007790a20b:9be8c185d95a5be4a06ec0067a3d8380$"
+	"smartupdate": "$TexturePacker:SmartUpdate:c9a18ce9b26f8945b63943ccb7c58635:28e825b510df89a455c37588d4353e77:9be8c185d95a5be4a06ec0067a3d8380$"
 }
 }
