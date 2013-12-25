@@ -102,7 +102,7 @@
       }
       this.pos.y += this.speed * game.timer.deltaAsSeconds();
 
-      if(this.pos.y > me.game.viewport.height) {
+      if(this.pos.y > me.game.viewport.height + 170) {
         game.scene.tarmac.removeAndAddCar(this);
       }
 
